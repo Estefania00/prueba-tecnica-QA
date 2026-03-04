@@ -14,10 +14,8 @@ class DashboardPage {
         cy.get('table.table tbody tr td.text-right span').each(($el) => {
             const texto = $el.text();
             if (texto.includes('+')) {
-                // Verde exacto de la página
                 expect($el).to.have.css('color', 'rgb(36, 179, 20)'); 
             } else if (texto.includes('-')) {
-                // Rojo exacto que detectamos en el error anterior
                 expect($el).to.have.css('color', 'rgb(230, 82, 82)'); 
             }
         });
@@ -27,8 +25,9 @@ class DashboardPage {
 const login = new LoginPage();
 const dashboard = new DashboardPage();
 
-describe('Prueba Front-end - Applitools', () => {
-    it('Debe iniciar sesión y validar tabla de gastos', () => {
+describe('Pruebas Front-end - Applitools', () => {
+    // Caso de prueba obligatorio (Happy Path)
+    it('Debe iniciar sesión exitosamente y validar datos financieros', () => {
         login.visitar();
         login.ingresarUsuario('testuser');
         login.ingresarPassword('testpassword');
@@ -39,5 +38,16 @@ describe('Prueba Front-end - Applitools', () => {
         dashboard.validarBalance();
         dashboard.validarCredito();
         dashboard.validarColores();
+    });
+
+    // CASO EXTRA: Validación por texto (más robusta para pruebas adicionales)
+    it('Debe mostrar el acceso para solicitar aumento de crédito', () => {
+        login.visitar();
+        login.ingresarUsuario('testuser');
+        login.ingresarPassword('testpassword');
+        login.clickLogin();
+
+        // Buscamos el elemento por el texto que el usuario ve, asegurando que sea visible
+        cy.contains('Request Increase').should('be.visible');
     });
 });
