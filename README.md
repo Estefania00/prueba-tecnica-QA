@@ -48,5 +48,13 @@ Implementación de funciones optimizadas para:
 ## 🚀 Cómo ejecutar las pruebas
 
 1. Instalar dependencias:
-   ```bash
    npm install
+   
+3. Ejecutar Pruebas de Lógica:
+   node logica.js
+
+4. Ejecutar Pruebas de API:
+   npx jest
+
+5. Ejecutar Pruebas Front-end (Modo Headless):
+   npx cypress run
